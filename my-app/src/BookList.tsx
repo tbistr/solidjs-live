@@ -1,14 +1,28 @@
-export function BookList() {
+import { createSignal, For } from "solid-js";
+import { Book } from "./App";
+
+interface BookListProps {
+    books: Book[];
+}
+
+export function BookList(props: BookListProps) {
+    const totalBooks = () => props.books.length;
+
     return (
-        <ul>
-            <li>
-                Code Complete{" "}
-                <span style={{ "font-style": "italic" }}>(Steve McConnell)</span>
-            </li>
-            <li>
-                The Hobbit{" "}
-                <span style={{ "font-style": "italic" }}>(J.R.R. Tolkien)</span>
-            </li>
-        </ul>
+        <>
+            <h2>My books ({totalBooks()})</h2>
+            <ul>
+                <For each={props.books}>
+                    {(book) => {
+                        return (
+                            <li>
+                                {book.title}{" "}
+                                <span style={{ "font-style": "italic" }}>({book.author})</span>
+                            </li>
+                        )
+                    }}
+                </For>
+            </ul>
+        </>
     );
 }
